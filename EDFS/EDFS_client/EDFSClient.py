@@ -83,6 +83,10 @@ class EDFSClient:
         partition_obj = self.nameNodeInterface.get_file_partitions(fs_path)
         return partition_obj
 
+    def getChildNodes(self, fs_path):
+        return self.nameNodeInterface.get_children_Paths(fs_path)
+
+
 # e = EDFSClient("./EDFS_client/namenode_config.conf")
 # e.WriteFile("a/b/csv","./EDFS_client/sample_text.csv",
 #             "csv", 4 )

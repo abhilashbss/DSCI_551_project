@@ -26,6 +26,9 @@ class NameNodeInterface:
     def ls(self, file_path):
         return self.server.Ls(file_path)
 
+    def get_children_Paths(self, fs_path):
+        return self.server.GetChildrenPaths(fs_path)
+
     def get_partition_table_name(self, file_path, partition_no):
         partition_locations = self.server.GetPartitionLocations(file_path)
         return partition_locations[str(partition_no)]

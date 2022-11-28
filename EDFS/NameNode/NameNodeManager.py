@@ -19,6 +19,21 @@ class NameNodeManager:
         assert len(data) == 1
         return {"datanode_db_url": data[0]["datanode_db_url"], "datanode_db_type": data[0]["datanode_db_type"], "partitions": data[0]["partition_locations"]}
 
+
+    def GetChildrenPaths(self, fs_path):
+
+        file_path_parent_query = {}
+        mydoc = self.mycol.find(file_path_parent_query)
+        all_paths = list(mydoc)
+        children = []
+        for i in range(len(all_paths)):
+            if "/".join(all_paths["file_path"].split("/")[:-1]) == fs_path:
+                children.append({"file_path": all_paths[i]["file_path"],
+                                 "file_type": all_paths[i]["file_type"],
+                                 "total_partitions": all_paths[i]["total_partitions"]})
+
+        return children
+
     # create tables in datanode db and update metastore
     def CreateFilePartitions(self, file_name, file_type, number_of_partitions, datanode_type=None, datanode_url=None):
         # check if parent path is directory
