@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body {
+                margin: 0;
+                font-family: Arial, Helvetica, sans-serif;
+                background-color: #97bfcf;
+            }
+
+            .topnav {
+                overflow: hidden;
+                background-color: rgb(12, 12, 12); 
+            }
+
+            .topnav a {
+                float: left;
+                color: #f2f2f2;
+                text-align: center;
+                padding: 20px 30px;
+                text-decoration: none;
+                font-size: 17px;
+            }
+
+            .topnav a:hover {
+                background-color: #ddd;
+                color: black;
+            }
+
+            .topnav a.active {
+                background-color: #373e41;
+                color: rgb(254, 254, 255);
+            }
+            .centered {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            img{
+                height:700px;
+            }
+            
+            th,tr,td {
+        border: 1px solid black;
+      }
+      td{
+          padding:20px;
+      }
+      th{
+          padding-left: 10px;
+      }
+      .example input[type=text] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 70%;
+  background: #f1f1f1;
+}
+
+.example button {
+  float:left;
+  width: 10%;
+  height:41px;
+  padding: 10px;
+  background: #3b3d3f;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none;
+  cursor: pointer;
+}
+
+.example button:hover {
+  background: #282a2b;
+}
+
+.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.dropbtn {
+  background-color: #036070;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  padding-left: 15%;
+  padding-top: 10px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.text_output {
+  
+  height: 250px;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #036070;}
+            
+        </style>
+    </head>
+<body>
+
+<div class="topnav">
+  <a href="index.html">EDFS</a>
+  <a class="active" href="search.html">Search</a>
+  <a href="analytics.html">Analytics</a>
+</div>
+<div class="container" style="padding-left: 15%;" >
+    <h3>Search Function:</h3>
+    <p style="font-size:20px;">Search function: Search the databases(MongoDB and Firebase) using SQL Queries<br>
+        This search function allows users to search whatever they want to see on the two databases
+        using SQL Queries.<br>Enter SQL Queries as input. Here are few examples;<br>
+        <b>Examples:</b><br>
+        1.<br>
+        2.<br>
+        3.<br>
+        4.<br>
+        5.<br>
+        6.<br>
+        
+    </p>
+    </div>
+   
+      <br>
+      <p style="padding-left: 15%; font-size:20px;">Enter search query:</p>
+    <div class="example" action="" style="margin:auto; max-width: 1000px;">
+        <input type="text" placeholder="Enter query.. " name="search2" id = "search2">
+        <button type="submit" Id="Go">Submit</button>
+    </div>
+    
+    <div class = "text_output" style="padding-top:50px;padding-left: 15%;">
+        <p style="font-size:20px;">Result of the query:</p>
+        <textarea id="output" style="resize: none;width: 850px;height:550px" disabled></textarea></div> 
+
+
+</body>
+</html>

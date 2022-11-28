@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body {
+                margin: 0;
+                font-family: Arial, Helvetica, sans-serif;
+                background-color: #97bfcf;
+            }
+
+            .topnav {
+                overflow: hidden;
+                background-color: rgb(12, 12, 12); 
+            }
+
+            .topnav a {
+                float: left;
+                color: #f2f2f2;
+                text-align: center;
+                padding: 20px 30px;
+                text-decoration: none;
+                font-size: 17px;
+            }
+
+            .topnav a:hover {
+                background-color: #ddd;
+                color: black;
+            }
+
+            .topnav a.active {
+                background-color: #373e41;
+                color: rgb(254, 254, 255);
+            }
+            .centered {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            img{
+                height:700px;
+            }
+            
+            th,tr,td {
+        border: 1px solid black;
+      }
+      td{
+          padding:20px;
+      }
+      th{
+          padding-left: 10px;
+      }
+      .example input[type=text] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 70%;
+  background: #f1f1f1;
+}
+
+.example button {
+  float:left;
+  width: 10%;
+  height:41px;
+  padding: 10px;
+  background: #3b3d3f;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none;
+  cursor: pointer;
+}
+
+.example button:hover {
+  background: #282a2b;
+}
+
+.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.dropbtn {
+  background-color: #036070;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  padding-left: 15%;
+  padding-top: 10px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.text_output {
+  
+  height: 250px;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #036070;}
+            
+        </style>
+    </head>
+<body>
+
+<div class="topnav">
+  <a class="active" href="index.html">EDFS</a>
+  <a href="search.html">Search</a>
+  <a href="analytics.html">Analytics</a>
+</div>
+
+
+<div class="Terminal" style="padding:10px;">
+  <b><p style="padding-left: 15%; font-size:20px;">Terminal Commands:</p></b>
+  <p style="padding-left: 15%; font-size:20px;">1. <b>mkdir:</b> - Make Directory - create a directory in file system, e.g., mkdir /user/john <br>
+    2. <b>ls:</b> - List Content - listing content of a given directory, e.g., ls /user<br>
+    3. <b>cat:</b> - Display Content - display content of a file, e.g., cat /user/john/hello.txt<br>
+    4. <b>rm:</b> - Remove a file from the file system -  e.g., rm /user/john/hello.txt<br>
+    5. <b>put:</b> - Uploading a file to file system - e.g., put(cars.csv, /user/john, k = # partitions) will
+    upload a file cars.csv to the directory /user/john in EDFS. But note that the file
+    should be stored in k partitions, and the file system should remember where the
+    partitions are stored. You should design a method to partition the data. You may
+    also have the user indicate the method, e.g., hashing on certain car attribute, in the
+    put method.<br>
+    6. <b>getPartitionLocations(file):</b> - Get the partition locations - this method will return the locations of partitions of the
+    file.<br>
+    7. <b>readPartition(file, partition#):</b> - Read a partition of file - this method will return the content of partition # of
+    the specified file. The portioned data will be needed in the second task for parallel
+    processing.</p>
+</div>
+
+
+<div class="container" style="padding:10px;">
+    <b><p style="padding-left: 15%; font-size:20px;">Enter the terminal Commands:</p></b>
+    <div class="dropdown" style="padding-bottom:90px;" >
+      <button class="dropbtn"> Select Databases</button>
+      <div class="dropdown-content">
+        <a href="#">MongoDB</a>
+        <a href="#">Firebase</a>
+      </div>
+    </div> 
+    <br>
+    <div class="example" action="" style="margin:auto; max-width: 1000px;">
+        <input type="text" placeholder="Enter any command.. " name="search2" id = "search2">
+        <button type="submit" Id="Go">Submit</button>
+    </div>  
+
+      <div class="dropdown" >
+        <button class="dropbtn">Example</button>
+        <div class="dropdown-content">
+          <a href="#">mkdir /user/example directory_name</a>
+          <a href="#">ls /user</a>
+          <a href="#">cat /user/example/hello.txt</a>
+          <a href="#">rm /user/example/hello.txt</a>
+          <a href="#">put(companies.csv, /user/example, k = no of partitions)</a>
+          <a href="#">getPartitionLocations(file)</a>
+          <a href="#">readPartition(file, partition_number)</a>
+        </div>
+      </div>
+</div>
+<div class = "text_output" style="padding-top:50px;padding-left: 15%;">
+  <textarea id="output" style="resize: none;width: 850px;height:250px" disabled></textarea></div>
+
+<div class="Navigator" style="padding:10px;">
+  <b><p style="padding-left: 15%; font-size:20px;">Navigator:</p></b>
+  <p style="padding-left: 15%; font-size:20px;">
+    Navigator section shows the structure of our two databases - MongoDB and Firebase
+    in a tree structure and allows you to interactively navigate hrough the directories.<br>
+    1. Select the database you want to navigate from the dropdown<br> 
+    2. This will give the structure of the database <br>
+    3. Navigate through the interactive structure of our database<br></p>
+   
+    <div class="dropdown">
+      <button class="dropbtn"> Select Databases</button>
+      <div class="dropdown-content">
+        <a href="#">MongoDB</a>
+        <a href="#">Firebase</a>
+      </div>
+    </div>
+</div>
+<div class = "text_output" style="padding-top:80px;padding-left: 15%;">
+  <textarea id="output" style="resize: none;width: 850px;height:350px" disabled></textarea></div>
+<script type="text/javascript">
+
+    var myLink = document.getElementById('Go');
+    var base_url = "";
+    myLink.onclick = function(){
+        var output_div = document.getElementById("output");
+        var search = document.getElementById("search2");
+        const myArray = search.value.split(" ");
+        console.log(myArray);
+        let command = myArray[0];
+        if(command == "mkdir"){
+
+          var xhr = new XMLHttpRequest();
+          xhr.withCredentials = true;
+
+          xhr.addEventListener("readystatechange", function() {
+            if(this.readyState === 4) {
+              console.log(this.responseText);      // call back function
+            }
+          });
+
+          xhr.open("GET", "http://localhost:4000?query=mkdir&param="+myArray[1]);
+
+          xhr.send();
+            output_div.value = "Done!!!";
+        }
+        else if(command == "ls"){
+            output_div.value = "a/b/dir1 \na/b/dir2 \na/b/dir3";
+        }
+        else if(command == "cat"){
+            output_div.value = `\"rank\",\"country\",\"crimeIndex\",\"pop2022\"\n
+\"1\",\"Venezuela\",\"83.7600\",\"28301.6960\"\n
+\"2\",\"Papua New Guinea\",\"80.7900\",\"10142.6190\"\n
+\"3\",\"South Africa\",\"76.8600\",\"59893.8850\"\n
+\"4\",\"Afghanistan\",\"76.3100\",\"41128.7710\"\n
+\"5\",\"Honduras\",\"74.5400\",\"10432.8600\"\n
+\"6\",\"Trinidad And Tobago\",\"71.6300\",\"1531.0440\"\n
+\"7\",\"Guyana\",\"68.7400\",\"808.7260\"\n
+\"8\",\"El Salvador\",\"67.7900\",\"6336.3920\"\n
+\"9\",\"Brazil\",\"67.4900\",\"215313.4980\"\n
+\"10\",\"Jamaica\",\"67.4200\",\"2827.3770\"\n
+\"11\",\"Syria\",\"67.1800\",\"22125.2490\"\n
+\"12\",\"Peru\",\"66.7200\",\"34049.5880\"\n
+\"13\",\"Angola\",\"66.4800\",\"35588.9870\"\n
+\"14\",\"Cameroon\",\"65.2400\",\"27914.5360\"\n
+\"15\",\"Namibia\",\"65.2100\",\"2567.0120\"\n";
+        `;}
+        else if(command == "rm"){
+            output_div.value = "File Removed!!";
+        }
+        else if(command == "put(literacy.csv, /a/b, 3)"){
+            output_div.value = "File "+ myArray[1]+ " created at fs_path "+myArray[2];
+        }
+    
+    }
+    
+    
+    </script>
+
+</body>
+</html>
