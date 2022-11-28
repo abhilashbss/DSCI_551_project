@@ -1,7 +1,7 @@
-from FilePartitioner.CountBasedPartitioner import CountBasedPartitioner
-from NameNodeInterface import NameNodeInterface
-from db_connectors.db_connector import db_connector
-from DatanodeInterface import DatanodeInterface
+from EDFS.EDFS_client.FilePartitioner.CountBasedPartitioner import CountBasedPartitioner
+from EDFS.EDFS_client.NameNodeInterface import NameNodeInterface
+from EDFS.db_connectors.db_connector import db_connector
+from EDFS.EDFS_client.DatanodeInterface import DatanodeInterface
 
 
 class EDFSClient:
@@ -83,7 +83,7 @@ class EDFSClient:
         partition_obj = self.nameNodeInterface.get_file_partitions(fs_path)
         return partition_obj
 
-e = EDFSClient("./EDFS_client/namenode_config.conf")
+# e = EDFSClient("./EDFS_client/namenode_config.conf")
 # e.WriteFile("a/b/csv","./EDFS_client/sample_text.csv",
 #             "csv", 4 )
 # print(e.ReadFile("a/b/csv"))

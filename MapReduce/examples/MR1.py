@@ -1,31 +1,35 @@
 from mapper.mapper import mapper
 from Reducer.Reducer import Reducer
 from Partitioner.partitioner import partitioner
+from EDFS.EDFS_client.EDFSClient import EDFSClient
+import pandas as pd
 
-# output_pairs: [(1,0),(1,3)]
-def func_for_partition(key, arr_of_dict):
-    output_pairs = []
-    for i in range(len(arr_of_dict)):
-        output_pairs.append((arr_of_dict[i]["1960"]%3, 1))
-    return output_pairs
 
-def func_for_reduce(value_list, output):
-    output.append(sum(value_list))
+e = EDFSClient("/Users/abhilashbss/Desktop/repositories/DSCI_551_project/EDFS/EDFS_client/namenode_config.conf")
+# e.WriteFile("a/b/crime_rate_csv","/Users/abhilashbss/Desktop/repositories/DSCI_551_project/dataset/CrimeRate.csv",
+#             "csv", 4 )
+partitions = e.ReadFileRetainPartition("a/b/crime_rate_csv")
 
-partitions = [[{"1960":1},{"1960":2}],
-              [{"1960":3},{"1960":4}]]
+def MapFn1(key, partition_data):
+    df = pd.DataFrame(partition_data)
+    df.sort_values(by=['crimeIndex'], ascending=False)
+    res=df[['country', 'crimeIndex']].head()
+    l=[]
+    for k, row in res.iterrows():
+        l.append((1,[row["country"],row["crimeIndex"]]))
+    return l
 
-# Map operation
-m = mapper(func_for_partition)
+
+m = mapper(MapFn1)
 mapped_partitions = m.map(partitions)
 
-print("mapped_partitions")
-print(mapped_partitions)
-print("partitioned data")
-print(m.partitioned_data)
+
+def func_for_reduce(value_list, output):
+    value_list.sort(key=lambda x: -1*float(x[1]))
+    top_5 = value_list[:5]
+    output.append(top_5)    #return statement
 
 
-# Reduce operation
 r = Reducer(func_for_reduce)
 reduced_output = r.reduce(m.partitioned_data)
 print("reduced_output")
@@ -33,19 +37,3 @@ print(reduced_output)
 
 
 
-
-def MapFn1(key, partition_data):
-    df = pd.DataFrame(partition_data)
-    df.sort_values(by=['crimeIndex'], ascending=False)
-    res=df[['country', 'crimeIndex']].head()
-    print(res)
-    return res
-
-m = mapper(MapFn1)
-mapped_partitions = m.map(partitions)
-
-print("mapped_partitions")
-print(mapped_partitions)
-print("partitioned data")
-print(m.partitioned_data)
-print(MapFn1(partition_data))

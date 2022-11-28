@@ -5,11 +5,8 @@ from shuffle.shuffle import shuffle
 import collections
 
 
-def flatten(x):
-    if isinstance(x, collections.Iterable):
-        return [a for i in x for a in flatten(i)]
-    else:
-        return [x]
+def flatten(l):
+    return [item for sublist in l for item in sublist]
 
 
 class Reducer:
