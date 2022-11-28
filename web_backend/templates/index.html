@@ -136,19 +136,19 @@
 
 <div class="Terminal" style="padding:10px;">
   <b><p style="padding-left: 15%; font-size:20px;">Terminal Commands:</p></b>
-  <p style="padding-left: 15%; font-size:20px;">1. <b>mkdir:</b> - Make Directory - create a directory in file system, e.g., mkdir /user/john <br>
+  <p style="padding-left: 15%; font-size:20px;">1. <b>mkdir:</b> - Make Directory - create a directory in file system, e.g., mkdir /user john <br>
     2. <b>ls:</b> - List Content - listing content of a given directory, e.g., ls /user<br>
     3. <b>cat:</b> - Display Content - display content of a file, e.g., cat /user/john/hello.txt<br>
     4. <b>rm:</b> - Remove a file from the file system -  e.g., rm /user/john/hello.txt<br>
-    5. <b>put:</b> - Uploading a file to file system - e.g., put(cars.csv, /user/john, k = # partitions) will
-    upload a file cars.csv to the directory /user/john in EDFS. But note that the file
+    5. <b>put:</b> - Uploading a file to file system - e.g., put /user/john cars.csv csv  3  will
+    upload a file cars.csv to the directory /user/john in EDFS with 3 partitions. But note that the file
     should be stored in k partitions, and the file system should remember where the
     partitions are stored. You should design a method to partition the data. You may
     also have the user indicate the method, e.g., hashing on certain car attribute, in the
     put method.<br>
-    6. <b>getPartitionLocations(file):</b> - Get the partition locations - this method will return the locations of partitions of the
+    6. <b>getPartitionLocations file :</b> - Get the partition locations - this method will return the locations of partitions of the
     file.<br>
-    7. <b>readPartition(file, partition#):</b> - Read a partition of file - this method will return the content of partition # of
+    7. <b>readPartition file  partition#:</b> - Read a partition of file - this method will return the content of partition # of
     the specified file. The portioned data will be needed in the second task for parallel
     processing.</p>
 </div>
@@ -165,8 +165,10 @@
     </div> 
     <br>
     <div class="example" action="" style="margin:auto; max-width: 1000px;">
-        <input type="text" placeholder="Enter any command.. " name="search2" id = "search2">
+        <form action="/command" method="post">
+        <input type="text" placeholder="Enter any command.. " name="command" id = "search2">
         <button type="submit" Id="Go">Submit</button>
+        </form>
     </div>  
 
       <div class="dropdown" >
@@ -183,7 +185,7 @@
       </div>
 </div>
 <div class = "text_output" style="padding-top:50px;padding-left: 15%;">
-  <textarea id="output" style="resize: none;width: 850px;height:250px" disabled></textarea></div>
+  <textarea id="output" style="resize: none;width: 850px;height:250px" disabled>{{command_output}}</textarea></div>
 
 <div class="Navigator" style="padding:10px;">
   <b><p style="padding-left: 15%; font-size:20px;">Navigator:</p></b>
@@ -193,9 +195,8 @@
     1. Select the database you want to navigate from the dropdown<br> 
     2. This will give the structure of the database <br>
     3. Navigate through the interactive structure of our database<br></p>
-   
     <div class="dropdown">
-      <button class="dropbtn"> Select Databases</button>
+      <button class="dropbtn">Select Databases</button>
       <div class="dropdown-content">
         <a href="#">MongoDB</a>
         <a href="#">Firebase</a>
@@ -204,64 +205,64 @@
 </div>
 <div class = "text_output" style="padding-top:80px;padding-left: 15%;">
   <textarea id="output" style="resize: none;width: 850px;height:350px" disabled></textarea></div>
-<script type="text/javascript">
+<!--<script type="text/javascript">-->
 
-    var myLink = document.getElementById('Go');
-    var base_url = "";
-    myLink.onclick = function(){
-        var output_div = document.getElementById("output");
-        var search = document.getElementById("search2");
-        const myArray = search.value.split(" ");
-        console.log(myArray);
-        let command = myArray[0];
-        if(command == "mkdir"){
+<!--    var myLink = document.getElementById('Go');-->
+<!--    var base_url = "";-->
+<!--    myLink.onclick = function(){-->
+<!--        var output_div = document.getElementById("output");-->
+<!--        var search = document.getElementById("search2");-->
+<!--        const myArray = search.value.split(" ");-->
+<!--        console.log(myArray);-->
+<!--        let command = myArray[0];-->
+<!--        if(command == "mkdir"){-->
 
-          var xhr = new XMLHttpRequest();
-          xhr.withCredentials = true;
+<!--          var xhr = new XMLHttpRequest();-->
+<!--          xhr.withCredentials = true;-->
 
-          xhr.addEventListener("readystatechange", function() {
-            if(this.readyState === 4) {
-              console.log(this.responseText);      // call back function
-            }
-          });
+<!--          xhr.addEventListener("readystatechange", function() {-->
+<!--            if(this.readyState === 4) {-->
+<!--              console.log(this.responseText);      // call back function-->
+<!--            }-->
+<!--          });-->
 
-          xhr.open("GET", "http://localhost:4000?query=mkdir&param="+myArray[1]);
+<!--          xhr.open("GET", "http://localhost:4000?query=mkdir&param="+myArray[1]);-->
 
-          xhr.send();
-            output_div.value = "Done!!!";
-        }
-        else if(command == "ls"){
-            output_div.value = "a/b/dir1 \na/b/dir2 \na/b/dir3";
-        }
-        else if(command == "cat"){
-            output_div.value = `\"rank\",\"country\",\"crimeIndex\",\"pop2022\"\n
-\"1\",\"Venezuela\",\"83.7600\",\"28301.6960\"\n
-\"2\",\"Papua New Guinea\",\"80.7900\",\"10142.6190\"\n
-\"3\",\"South Africa\",\"76.8600\",\"59893.8850\"\n
-\"4\",\"Afghanistan\",\"76.3100\",\"41128.7710\"\n
-\"5\",\"Honduras\",\"74.5400\",\"10432.8600\"\n
-\"6\",\"Trinidad And Tobago\",\"71.6300\",\"1531.0440\"\n
-\"7\",\"Guyana\",\"68.7400\",\"808.7260\"\n
-\"8\",\"El Salvador\",\"67.7900\",\"6336.3920\"\n
-\"9\",\"Brazil\",\"67.4900\",\"215313.4980\"\n
-\"10\",\"Jamaica\",\"67.4200\",\"2827.3770\"\n
-\"11\",\"Syria\",\"67.1800\",\"22125.2490\"\n
-\"12\",\"Peru\",\"66.7200\",\"34049.5880\"\n
-\"13\",\"Angola\",\"66.4800\",\"35588.9870\"\n
-\"14\",\"Cameroon\",\"65.2400\",\"27914.5360\"\n
-\"15\",\"Namibia\",\"65.2100\",\"2567.0120\"\n";
-        `;}
-        else if(command == "rm"){
-            output_div.value = "File Removed!!";
-        }
-        else if(command == "put(literacy.csv, /a/b, 3)"){
-            output_div.value = "File "+ myArray[1]+ " created at fs_path "+myArray[2];
-        }
-    
-    }
-    
-    
-    </script>
+<!--          xhr.send();-->
+<!--            output_div.value = "Done!!!";-->
+<!--        }-->
+<!--        else if(command == "ls"){-->
+<!--            output_div.value = "a/b/dir1 \na/b/dir2 \na/b/dir3";-->
+<!--        }-->
+<!--        else if(command == "cat"){-->
+<!--            output_div.value = `\"rank\",\"country\",\"crimeIndex\",\"pop2022\"\n-->
+<!--\"1\",\"Venezuela\",\"83.7600\",\"28301.6960\"\n-->
+<!--\"2\",\"Papua New Guinea\",\"80.7900\",\"10142.6190\"\n-->
+<!--\"3\",\"South Africa\",\"76.8600\",\"59893.8850\"\n-->
+<!--\"4\",\"Afghanistan\",\"76.3100\",\"41128.7710\"\n-->
+<!--\"5\",\"Honduras\",\"74.5400\",\"10432.8600\"\n-->
+<!--\"6\",\"Trinidad And Tobago\",\"71.6300\",\"1531.0440\"\n-->
+<!--\"7\",\"Guyana\",\"68.7400\",\"808.7260\"\n-->
+<!--\"8\",\"El Salvador\",\"67.7900\",\"6336.3920\"\n-->
+<!--\"9\",\"Brazil\",\"67.4900\",\"215313.4980\"\n-->
+<!--\"10\",\"Jamaica\",\"67.4200\",\"2827.3770\"\n-->
+<!--\"11\",\"Syria\",\"67.1800\",\"22125.2490\"\n-->
+<!--\"12\",\"Peru\",\"66.7200\",\"34049.5880\"\n-->
+<!--\"13\",\"Angola\",\"66.4800\",\"35588.9870\"\n-->
+<!--\"14\",\"Cameroon\",\"65.2400\",\"27914.5360\"\n-->
+<!--\"15\",\"Namibia\",\"65.2100\",\"2567.0120\"\n";-->
+<!--        `;}-->
+<!--        else if(command == "rm"){-->
+<!--            output_div.value = "File Removed!!";-->
+<!--        }-->
+<!--        else if(command == "put(literacy.csv, /a/b, 3)"){-->
+<!--            output_div.value = "File "+ myArray[1]+ " created at fs_path "+myArray[2];-->
+<!--        }-->
+<!--    -->
+<!--    }-->
+<!--    -->
+<!--    -->
+<!--    </script>-->
 
 </body>
 </html>

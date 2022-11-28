@@ -9,10 +9,10 @@ class NameNodeInterface:
         self.server = xmlrpc.client.ServerProxy(config_dict["namenode_url"])
 
     def mkdir(self, file_path, directory_name):
-        self.server.Mkdir(file_path, directory_name)
+        return self.server.Mkdir(file_path, directory_name)
 
     def rm(self, file_path):
-        self.server.Rm(file_path)
+        return self.server.Rm(file_path)
 
     def create_file_partitions(self, file_path, no_of_partitions):
         response = self.server.CreateFilePartitions(file_path, "non-directory",no_of_partitions)

@@ -64,7 +64,8 @@ class firebase_connector():
 
     def write(self, partition_table, partition_data):
         response = requests.put(self.url+ "/" + partition_table + ".json", json.dumps(partition_data["file_content"], ensure_ascii=True))
-        
+        print("firebase_response")
+        print(response.json())
 
 # f = firebase_connector("https://dsci-551-19f64-default-rtdb.firebaseio.com/")
 # f.write("a_b_0",[{"a":"b"},{"a":"c"}])

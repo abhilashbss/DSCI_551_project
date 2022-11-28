@@ -56,7 +56,11 @@ class EDFSClient:
 
         for part in sorted(file_partitions.keys()):
             file_partitions[part]["table_name"]
-            file_data.append(dataNodeInterface.ReadFilePartition(fs_path, file_partitions[part]["table_name"]))
+            file_data.append({
+                "db_type": partition_obj["datanode_db_type"],
+                "db_url": partition_obj["datanode_db_url"],
+                "partition": part,
+                "partition_content":dataNodeInterface.ReadFilePartition(fs_path, file_partitions[part]["table_name"])})
 
         return file_data
 
@@ -77,7 +81,9 @@ class EDFSClient:
         return self.nameNodeInterface.rm(fs_path)
 
     def Mkdir(self, fs_path, name):
-        return self.nameNodeInterface.mkdir(fs_path, name)
+        res = self.nameNodeInterface.mkdir(fs_path, name)
+        print("mkdir response" + str(res))
+        return res
 
     def GetPartitionLocations(self, fs_path):
         partition_obj = self.nameNodeInterface.get_file_partitions(fs_path)

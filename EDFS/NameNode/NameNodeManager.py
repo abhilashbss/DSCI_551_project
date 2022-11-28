@@ -72,18 +72,22 @@ class NameNodeManager:
         file_path_parent_query = {"file_path": parent_path}
         mydoc = self.mycol.find(file_path_parent_query)
         parent = list(mydoc)
-        assert len(parent) == 1
-        assert parent[0]["file_type"] == "directory"
+        if not len(parent) == 1:
+            return str("more than one parent")
+        if not parent[0]["file_type"] == "directory":
+            return str("parent is not directory")
 
         # file does not exist
-        directory_path_query = {"file_path": directory_name}
+        directory_path_query = {"file_path": parent_path + "/" + directory_name}
         mydoc = self.mycol.find(directory_path_query)
         dir = list(mydoc)
-        assert len(dir) == 0
+        if not len(dir) == 0:
+            return "directory exists"
 
         new_file = {"file_path": parent_path + "/"+ directory_name, "file_type": "directory", "total_partitions": 0,
                     "datanode_db_type": "", "datanode_db_url": "", "partition_locations":""}
         self.mycol.insert_one(new_file)
+        return str("directory created")
 
     def Ls(self, path):
         file_path_query = {}
@@ -100,6 +104,8 @@ class NameNodeManager:
         file_path_query = {"file_path": file_path}
         mydoc = self.mycol.find(file_path_query)
         file = list(mydoc)
+        if len(file) == 0:
+            return "No file/directory to delete"
 
         if file[0]["file_type"] == "directory":
             file_path_query = {}
@@ -112,6 +118,7 @@ class NameNodeManager:
                     self.mycol.delete_one(myquery)
         else:
             self.mycol.delete_one(file_path_query)
+        return "file/dir removed"
 
     def GetDefaultDataNode(self):
         return {"db_type": self.default_datanode_type, "db_url": self.default_datanode_url}

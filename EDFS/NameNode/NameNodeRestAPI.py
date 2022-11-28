@@ -16,8 +16,8 @@ def get_name_node_manager():
     firebase_config_dict = dict(configParser.items('firebase'))
     namenode_manager = NameNodeManager(config_dict["metastore_db_type"],
                                        config_dict["metastore_db_url"],
-                                       firebase_config_dict["default_datanode_type"],
-                                       firebase_config_dict["default_datanode_url"])
+                                       config_dict["default_datanode_type"],
+                                       config_dict["default_datanode_url"])
     return namenode_manager
 
 

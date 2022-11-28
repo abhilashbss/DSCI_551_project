@@ -3,4 +3,5 @@
 
 export PYTHONPATH="${PYTHONPATH}:/Users/abhilashbss/Desktop/repositories/DSCI_551_project/EDFS"
 export PYTHONPATH="${PYTHONPATH}:/Users/abhilashbss/Desktop/repositories/DSCI_551_project/MapReduce"
+export PYTHONPATH="${PYTHONPATH}:/Users/abhilashbss/Desktop/repositories/DSCI_551_project/web_backend"
 
