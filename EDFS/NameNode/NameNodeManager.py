@@ -3,13 +3,32 @@ import xmlrpc.client
 import copy
 
 class NameNodeManager:
-    def __init__(self, db_type, db_url, default_datanode_type=None, default_datanode_url=None):
+    def __init__(self, db_type, db_url, default_mongodb_datanode_type=None, default_mongodb_datanode_url=None,
+                 default_firebase_datanode_type=None, default_firebase_datanode_url=None):
         if db_type == "mongoDB":
             self.myclient = pymongo.MongoClient(db_url)
             self.mydb = self.myclient["Namenode"]
             self.mycol = self.mydb["metadata"]
-        self.default_datanode_type = default_datanode_type
-        self.default_datanode_url = default_datanode_url
+        self.default_mongodb_datanode_type = default_mongodb_datanode_type
+        self.default_mongodb_datanode_url = default_mongodb_datanode_url
+        self.default_firebase_datanode_type = default_firebase_datanode_type
+        self.default_firebase_datanode_url = default_firebase_datanode_url
+        self.default_datanode_url =None
+        self.default_datanode_type = None
+
+    def SetupDatanode(self, db_type):
+        if db_type=="firebase":
+            self.default_datanode_type = "firebase"
+            self.default_datanode_url = self.default_firebase_datanode_url
+            self.mycol = self.mydb["metadata_firebase"]
+        else:
+            self.default_datanode_type = "mongoDB"
+            self.default_datanode_url = self.default_mongodb_datanode_url
+            self.mycol = self.mydb["metadata_mongodb"]
+
+        print("db_type setup")
+        print(self.default_datanode_url)
+
 
     #returned object should contain datanodedb url
     def GetPartitionLocations(self, file_path):
@@ -37,6 +56,8 @@ class NameNodeManager:
     # create tables in datanode db and update metastore
     def CreateFilePartitions(self, file_name, file_type, number_of_partitions, datanode_type=None, datanode_url=None):
         # check if parent path is directory
+        print("create partition")
+        print(self.default_datanode_url)
 
         table_names = []
 

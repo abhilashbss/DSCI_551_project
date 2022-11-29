@@ -1,13 +1,14 @@
 from EDFS.EDFS_client.EDFSClient import EDFSClient
 import json
 class edfs_client_processor:
-    def __init__(self, command):
-        self.command = command
+    def __init__(self, db_type):
+        self.e = EDFSClient("/Users/abhilashbss/Desktop/repositories/DSCI_551_project/EDFS/EDFS_client/namenode_config.conf")
+        self.e.setup_datanode(db_type)
 
-    def process_edfs_command(self):
-        e = EDFSClient("/Users/abhilashbss/Desktop/repositories/DSCI_551_project/EDFS/EDFS_client/namenode_config.conf")
-        args = self.command.split(" ")[1:]
-        comm = self.command.split(" ")[0]
+    def process_edfs_command(self, command):
+        e = self.e
+        args = command.split(" ")[1:]
+        comm = command.split(" ")[0]
 
         if comm == "mkdir":
             return e.Mkdir(args[0], args[1])
@@ -32,5 +33,5 @@ class edfs_client_processor:
             return "Invalid command. Try again!!"
 
     def get_directory_contents(self, fs_path):
-        e = EDFSClient("/Users/abhilashbss/Desktop/repositories/DSCI_551_project/EDFS/EDFS_client/namenode_config.conf")
+        e = self.e
         return e.getChildNodes(fs_path)

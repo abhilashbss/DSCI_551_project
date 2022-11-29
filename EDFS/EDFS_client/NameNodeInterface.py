@@ -8,6 +8,10 @@ class NameNodeInterface:
         config_dict = dict(configParser.items('default'))
         self.server = xmlrpc.client.ServerProxy(config_dict["namenode_url"])
 
+    def setup_datanode(self, db_type):
+        print(db_type)
+        self.server.SetupDatanode(db_type)
+
     def mkdir(self, file_path, directory_name):
         return self.server.Mkdir(file_path, directory_name)
 
@@ -34,6 +38,7 @@ class NameNodeInterface:
         return partition_locations[str(partition_no)]
         
     def get_default_datanode_db(self):
+        print(self.server.GetDefaultDataNode())
         return self.server.GetDefaultDataNode()
 
 

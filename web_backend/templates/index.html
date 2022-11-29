@@ -157,13 +157,23 @@
 
 <div class="container" style="padding:10px;">
     <b><p style="padding-left: 15%; font-size:20px;">Enter the terminal Commands:</p></b>
-    <div class="dropdown" style="padding-bottom:90px;" >
-      <button class="dropbtn"> Select Databases</button>
-      <div class="dropdown-content">
-        <a href="#">MongoDB</a>
-        <a href="#">Firebase</a>
-      </div>
-    </div> 
+<!--    <div class="dropdown" style="padding-bottom:90px;" >-->
+<!--      <button class="dropbtn"> Select Databases</button>-->
+<!--      <div class="dropdown-content">-->
+<!--        <a href="#">MongoDB</a>-->
+<!--        <a href="#">Firebase</a>-->
+<!--      </div>-->
+<!--    </div> -->
+
+    <form action="/db_selection" method="post">
+        <select class="db_type" name="db_type" id="db_type">
+          <option value="firebase" >Firebase</option>
+          <option value="mongodb" >MongoDB</option>
+        </select>
+        <button type="submit" class="btn btn-default">Select DB</button>
+    </form>
+
+
     <br>
     <div class="example" action="" style="margin:auto; max-width: 1000px;">
         <form action="/command" method="post">
@@ -196,13 +206,7 @@
     1. Select the database you want to navigate from the dropdown<br> 
     2. This will give the structure of the database <br>
     3. Navigate through the interactive structure of our database<br></p>
-    <div class="dropdown">
-      <button class="dropbtn">Select Databases</button>
-      <div class="dropdown-content">
-        <a href="#">MongoDB</a>
-        <a href="#">Firebase</a>
-      </div>
-    </div>
+
 </div>
 <div class = "text_output" style="padding-top:80px;padding-left: 15%;">
   <textarea id="output" style="resize: none;width: 850px;height:350px" disabled></textarea></div>

@@ -9,6 +9,12 @@ class EDFSClient:
         # self.metadata_db_connector = db_connector.get_metadata_connector(name_node_url, metastore_type)
         self.nameNodeInterface = NameNodeInterface(name_node_config)
         self.datanode_connector = None
+        self.datanode_connector = None
+        self.dataNodeInterface = None
+
+    def setup_datanode(self, db_type ):
+        self.nameNodeInterface.setup_datanode(db_type)
+        self.datanode_connector = None
         datanode_config = self.nameNodeInterface.get_default_datanode_db()
         self.datanode_connector = db_connector().get_connector(datanode_config)
         self.dataNodeInterface = DatanodeInterface(self.datanode_connector)
