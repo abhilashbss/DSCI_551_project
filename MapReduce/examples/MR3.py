@@ -8,34 +8,31 @@ import pandas as pd
 e = EDFSClient("/Users/abhilashbss/Desktop/repositories/DSCI_551_project/EDFS/EDFS_client/namenode_config.conf")
 # e.WriteFile("a/b/crime_rate_csv","/Users/abhilashbss/Desktop/repositories/DSCI_551_project/dataset/CrimeRate.csv",
 #             "csv", 4 )
-partitions = e.ReadFileRetainPartition("a/b/CrimeRate.csv")
+partitions = e.ReadFileRetainPartition("a/b/'LifeExpectancyData.csv'")
 
-#Graph to show how the crime index is distributed across different countries
+#Find the countries which have life expectancy greater than 88
 
-def MapFn1(key, partition_data):
+def MapFn3(key, partition_data):
     df = pd.DataFrame(partition_data)
-    df.sort_values(by=['crimeIndex'], ascending=False)
-    res=df[['country', 'crimeIndex']].head()
+    filter = df['Life expectancy '] != ''
+    df1 = df[filter]
+    df2=df1[df1['Life expectancy '].astype(float)>88]
+    res=df2[['Life expectancy ','Country']]
     l=[]
     for k, row in res.iterrows():
-        l.append((1,[row["country"],row["crimeIndex"]]))
+        l.append((1,[row['Life expectancy '],row['Country']]))
     return l
 
-
-m = mapper(MapFn1)
+m = mapper(MapFn3)
 mapped_partitions = m.map(partitions)
 
 
 def func_for_reduce(value_list, output):
     value_list.sort(key=lambda x: -1*float(x[1]))
-    top_5 = value_list[:5]
-    output.append(top_5)    #return statement
+    output.append(value_list)    #return statement
 
 
 r = Reducer(func_for_reduce)
 reduced_output = r.reduce(m.partitioned_data)
 print("reduced_output")
 print(reduced_output)
-
-
-
