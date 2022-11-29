@@ -4,7 +4,7 @@ class edfs_client_processor:
     def __init__(self, command):
         self.command = command
 
-    def process_command(self):
+    def process_edfs_command(self):
         e = EDFSClient("/Users/abhilashbss/Desktop/repositories/DSCI_551_project/EDFS/EDFS_client/namenode_config.conf")
         args = self.command.split(" ")[1:]
         comm = self.command.split(" ")[0]
@@ -30,3 +30,7 @@ class edfs_client_processor:
             return json.dumps(e.ReadFilePartition(args[0],args[1]), indent=2)
         else:
             return "Invalid command. Try again!!"
+
+    def get_directory_contents(self, fs_path):
+        e = EDFSClient("/Users/abhilashbss/Desktop/repositories/DSCI_551_project/EDFS/EDFS_client/namenode_config.conf")
+        return e.getChildNodes(fs_path)

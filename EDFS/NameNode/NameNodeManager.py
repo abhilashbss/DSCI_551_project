@@ -21,13 +21,13 @@ class NameNodeManager:
 
 
     def GetChildrenPaths(self, fs_path):
-
         file_path_parent_query = {}
         mydoc = self.mycol.find(file_path_parent_query)
         all_paths = list(mydoc)
         children = []
+
         for i in range(len(all_paths)):
-            if "/".join(all_paths["file_path"].split("/")[:-1]) == fs_path:
+            if "/".join(all_paths[i]["file_path"].split("/")[:-1]) == fs_path:
                 children.append({"file_path": all_paths[i]["file_path"],
                                  "file_type": all_paths[i]["file_type"],
                                  "total_partitions": all_paths[i]["total_partitions"]})

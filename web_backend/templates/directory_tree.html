@@ -11,7 +11,7 @@
 
             .topnav {
                 overflow: hidden;
-                background-color: rgb(12, 12, 12); 
+                background-color: rgb(12, 12, 12);
             }
 
             .topnav a {
@@ -41,7 +41,7 @@
             img{
                 height:700px;
             }
-            
+
             th,tr,td {
         border: 1px solid black;
       }
@@ -113,7 +113,7 @@
   display: block;
 }
 .text_output {
-  
+
   height: 250px;
 }
 
@@ -122,43 +122,42 @@
 .dropdown:hover .dropdown-content {display: block;}
 
 .dropdown:hover .dropbtn {background-color: #036070;}
-            
+
         </style>
     </head>
 <body>
 
 <div class="topnav">
   <a href="index.html">EDFS</a>
-  <a class="active" href="search.html">Search</a>
+  <a href="search.html">Search</a>
   <a href="analytics.html">Analytics</a>
-    <a href="directory_tree.html">Directory Tree</a>
+  <a class="active"  href="di.html">Directory Tree</a>
 </div>
-<div class="container" style="padding-left: 15%;" >
-    <h3>Search Function:</h3>
-    <p style="font-size:20px;">Search function: Search the databases(MongoDB and Firebase) using SQL Queries<br>
-        This search function allows users to search whatever they want to see on the two databases
-        using SQL Queries.<br>Enter SQL Queries as input. Here are few examples;<br>
-        <b>Examples:</b><br>
-        1.<br>
-        2.<br>
-        3.<br>
-        4.<br>
-        5.<br>
-        6.<br>
-        
-    </p>
-    </div>
-   
-      <br>
-      <p style="padding-left: 15%; font-size:20px;">Enter search query:</p>
-    <div class="example" action="" style="margin:auto; max-width: 1000px;">
-        <input type="text" placeholder="Enter query.. " name="search2" id = "search2">
-        <button type="submit" Id="Go">Submit</button>
-    </div>
-    
-    <div class = "text_output" style="padding-top:50px;padding-left: 15%;">
-        <p style="font-size:20px;">Result of the query:</p>
-        <textarea id="output" style="resize: none;width: 850px;height:550px" disabled></textarea></div> 
+
+
+<div class="Terminal" style="padding:10px;">
+  <b><p style="padding-left: 15%; font-size:20px;">directory_path:{{current_directory}}</p></b>
+</div>
+
+
+<div class="container" style="padding:10px;">
+    <a href="/directory_tree_back?cur_dir={{current_directory}}"> back </a>
+    <b><p style="padding-left: 15%; font-size:20px;">Contents: </p></b>
+    <ul>
+        {% for content in contents %}
+        <ul>
+            <li>File/Directory:
+                <a href="/directory_tree_parse?cur_dir={{ content['file_path'] }}">{{ content['file_path'] }}</a>
+            </li>
+
+
+            <li>type: {{ content["file_type"] }}</li>
+            <li>partitions: {{ content["total_partitions"] }}</li>
+        </ul>
+        <br>
+        {% endfor %}
+    </ul>
+</div>
 
 
 </body>
