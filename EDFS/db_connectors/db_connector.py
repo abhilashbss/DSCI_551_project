@@ -64,6 +64,7 @@ class firebase_connector():
 
     def write(self, partition_table, partition_data):
         response = requests.put(self.url+ "/" + partition_table + ".json", json.dumps(partition_data["file_content"], ensure_ascii=True))
+        print(partition_data["file_content"])
         print("firebase_response")
         print(response.json())
 

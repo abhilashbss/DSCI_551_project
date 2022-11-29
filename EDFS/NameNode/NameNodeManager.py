@@ -35,9 +35,11 @@ class NameNodeManager:
         file_path_query = {"file_path": file_path}
         mydoc = self.mycol.find(file_path_query)
         data = list(mydoc)
+        print(self.default_datanode_url)
+        print(file_path)
+        print(data)
         assert len(data) == 1
         return {"datanode_db_url": data[0]["datanode_db_url"], "datanode_db_type": data[0]["datanode_db_type"], "partitions": data[0]["partition_locations"]}
-
 
     def GetChildrenPaths(self, fs_path):
         file_path_parent_query = {}
