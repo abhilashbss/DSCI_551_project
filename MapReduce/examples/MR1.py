@@ -6,14 +6,15 @@ import pandas as pd
 
 
 e = EDFSClient("/Users/abhilashbss/Desktop/repositories/DSCI_551_project/EDFS/EDFS_client/namenode_config.conf")
+e.setup_datanode("firebase")
 # e.WriteFile("a/b/crime_rate_csv","/Users/abhilashbss/Desktop/repositories/DSCI_551_project/dataset/CrimeRate.csv",
 #             "csv", 4 )
-partitions = e.ReadFileRetainPartition("a/b/CrimeRate.csv")
+partitions = e.ReadFileRetainPartition("a/b/crime_rate_csv")
 
 #Graph to show how the crime index is distributed across different countries
 
 def MapFn1(key, partition_data):
-    df = pd.DataFrame(partition_data)
+    df = pd.DataFrame(partition_data["partition_content"])
     df.sort_values(by=['crimeIndex'], ascending=False)
     res=df[['country', 'crimeIndex']].head()
     l=[]

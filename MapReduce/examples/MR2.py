@@ -8,20 +8,26 @@ import pandas as pd
 e = EDFSClient("/Users/abhilashbss/Desktop/repositories/DSCI_551_project/EDFS/EDFS_client/namenode_config.conf")
 # e.WriteFile("a/b/crime_rate_csv","/Users/abhilashbss/Desktop/repositories/DSCI_551_project/dataset/CrimeRate.csv",
 #             "csv", 4 )
-partitions = e.ReadFileRetainPartition("a/b/LiteracyRates.csv")
+e.setup_datanode("firebase")
+partitions = e.ReadFileRetainPartition("a/b/literacy_rate_csv")
 
 #Find the country with the highest literacy rate
 
 def MapFn2(key, partition_data):
-    df = pd.DataFrame(partition_data)
+    # print(partition_data["partition_content"])
+    df = pd.DataFrame(partition_data["partition_content"])
     df1=df.sort_values(by=['Literacy rates (World Bank, CIA World Factbook, and other sources)'], ascending=False)
     res=df1[['Entity','Literacy rates (World Bank, CIA World Factbook, and other sources)']].iloc[0]
-    t=(1,[res['Entity'],res['Literacy rates (World Bank, CIA World Factbook, and other sources)']])
+    t=[(1,[res['Entity'],res['Literacy rates (World Bank, CIA World Factbook, and other sources)']])]
     return t
 
 
 m = mapper(MapFn2)
 mapped_partitions = m.map(partitions)
+
+# print(mapped_partitions)
+
+
 
 
 def func_for_reduce(value_list, output):
@@ -35,5 +41,7 @@ reduced_output = r.reduce(m.partitioned_data)
 print("reduced_output")
 print(reduced_output)
 
-
+# Output
+# defaultdict(<class 'list'>, {1: defaultdict(<class 'list'>, {1: [['North Korea', '99.999237']]})})
+#
 
